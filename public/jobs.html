@@ -44,7 +44,7 @@
     <div class="container hero-content">
       <div class="hero-badge">
         <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-        <span>Supabase Protected Career Portal</span>
+        <span>Public Career Board &amp; Job Directory</span>
       </div>
       <h1 class="hero-title" style="font-size: 2.25rem;">Verified Open Positions</h1>
       <p class="hero-subtitle" style="margin-bottom: 0; max-width: 600px;">Direct applications to vetted corporate openings across Delhi NCR and remote hiring hubs.</p>
@@ -54,21 +54,8 @@
   <!-- Main Catalog Content -->
   <main class="section container">
     
-    <!-- Lock State Banner (Visible when user is NOT authenticated via Supabase) -->
-    <div id="authProtectedLockBanner" class="lock-banner" style="display: none;">
-      <div style="width: 56px; height: 56px; background-color: var(--color-brand-light); color: var(--color-brand); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 16px;">
-        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 28px; height: 28px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-      </div>
-      <h2 style="font-size: 1.5rem; margin-bottom: 8px;">Candidate Authentication Required</h2>
-      <p style="color: var(--color-text-muted); max-width: 520px; margin: 0 auto 24px;">To view active job openings, search listings, and submit your CV, please sign in or create a candidate account with Supabase Auth.</p>
-      <div style="display: flex; gap: 12px; justify-content: center;">
-        <button type="button" class="btn btn-primary btn-lg" onclick="openAuthModal('signin')">Candidate Sign In</button>
-        <button type="button" class="btn btn-secondary btn-lg" onclick="openAuthModal('signup')">Create Free Account</button>
-      </div>
-    </div>
-
-    <!-- Authenticated Content Area -->
-    <div id="authenticatedCatalogContent" style="display: none;">
+    <!-- Catalog Content Area -->
+    <div id="authenticatedCatalogContent">
       <!-- Search & Filter Controls -->
       <div class="jobs-filter-bar">
         <div class="search-filter-row">
@@ -171,7 +158,7 @@
 
         <div class="form-group">
           <label for="candEmail">Email Address <span class="required-star">*</span></label>
-          <input type="email" id="candEmail" class="form-control" placeholder="e.g. ananya@gmail.com" required readonly style="background-color: var(--color-bg-subtle);">
+          <input type="email" id="candEmail" class="form-control" placeholder="e.g. ananya@gmail.com" required>
         </div>
 
         <div class="form-group">
@@ -225,6 +212,10 @@
     let searchQuery = '';
 
     window.addEventListener('DOMContentLoaded', async () => {
+      // Fetch active job catalog immediately on page load for all users
+      document.getElementById('jobsGrid').innerHTML = renderSkeletonCards(6);
+      fetchJobs();
+
       // 1. Check if user is logged in as Admin in Console
       try {
         const sessionRes = await fetch('/api/admin/check-session');
@@ -264,12 +255,7 @@
 
     // Handle Admin Console Access
     function handleAdminAccess() {
-      const lockBanner = document.getElementById('authProtectedLockBanner');
-      const catalogContent = document.getElementById('authenticatedCatalogContent');
       const navAuthContainer = document.getElementById('navAuthContainer');
-
-      lockBanner.style.display = 'none';
-      catalogContent.style.display = 'block';
 
       navAuthContainer.innerHTML = `
         <div class="auth-user-badge" style="background-color: var(--color-warning-bg); color: var(--color-warning); border: 1px solid var(--color-warning-border);">
@@ -278,25 +264,16 @@
           <a href="admin.html" style="color:var(--color-brand); font-weight:700; text-decoration:none; margin-left:6px;">Go to Console</a>
         </div>
       `;
-
-      if (activeCatalog.length === 0) {
-        document.getElementById('jobsGrid').innerHTML = renderSkeletonCards(6);
-        fetchJobs();
-      }
     }
 
     // Handle Supabase Candidate Auth Session State
     function handleAuthStateChange(session) {
       if (isAdminUser) return;
 
-      const lockBanner = document.getElementById('authProtectedLockBanner');
-      const catalogContent = document.getElementById('authenticatedCatalogContent');
       const navAuthContainer = document.getElementById('navAuthContainer');
 
       if (session && session.user) {
         currentUser = session.user;
-        lockBanner.style.display = 'none';
-        catalogContent.style.display = 'block';
 
         const userName = currentUser.user_metadata?.full_name || currentUser.email.split('@')[0];
 
@@ -307,18 +284,11 @@
             <button type="button" onclick="signOutCandidate()" style="background:none; border:none; color:var(--color-error); cursor:pointer; font-size:0.75rem; font-weight:700; margin-left:6px;" title="Sign Out">Sign Out</button>
           </div>
         `;
-
-        if (activeCatalog.length === 0) {
-          document.getElementById('jobsGrid').innerHTML = renderSkeletonCards(6);
-          fetchJobs();
-        }
       } else {
         currentUser = null;
-        lockBanner.style.display = 'block';
-        catalogContent.style.display = 'none';
 
         navAuthContainer.innerHTML = `
-          <button type="button" class="btn btn-primary btn-sm" onclick="openAuthModal('signin')">Candidate Sign In</button>
+          <button type="button" class="btn btn-primary btn-sm" onclick="openAuthModal('signin')">Candidate Login</button>
         `;
       }
     }
@@ -525,15 +495,10 @@
     }
 
     function openModal(jobId, jobTitle) {
-      if (!currentUser) {
-        openAuthModal('signin');
-        return;
-      }
-
       document.getElementById('targetJobId').value = jobId;
       document.getElementById('targetJobTitle').textContent = jobTitle;
 
-      // Auto-fill candidate email & name from Supabase user session!
+      // Auto-fill candidate email & name from Supabase user session if logged in
       if (currentUser) {
         document.getElementById('candEmail').value = currentUser.email || '';
         document.getElementById('candName').value = currentUser.user_metadata?.full_name || currentUser.email.split('@')[0] || '';
