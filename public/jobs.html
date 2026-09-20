@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore verified job openings, entry-level fresher roles, internships, part-time, and work-from-home positions across Delhi NCR.">
+  <title>Career Openings &amp; Opportunities | ODD JOBS</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="ui-utils.js" defer></script>
+</head>
+<body>
+
+  <!-- Sticky Navbar -->
+  <header class="nav-header">
+    <div class="container nav-container">
+      <a href="index.html" class="logo" aria-label="ODD JOBS HR Homepage">
+        <img src="logo.png" alt="ODD JOBS Logo" class="header-logo">
+        ODD<span>JOBS</span>
+      </a>
+
+      <nav class="nav-links" id="navLinks" aria-label="Main Navigation">
+        <a href="index.html">Home</a>
+        <a href="index.html#services">Services</a>
+        <a href="jobs.html" class="active">Career Board</a>
+        <a href="admin.html">Console Login</a>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- Supabase Candidate Auth User Badge Container -->
+        <div id="navAuthContainer">
+          <button type="button" class="btn btn-primary btn-sm" onclick="openAuthModal('signin')">Candidate Login</button>
+        </div>
+
+        <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+          <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Header -->
+  <section class="hero-section" style="padding: 60px 0 40px; background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);">
+    <div class="container hero-content">
+      <div class="hero-badge">
+        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+        <span>Supabase Protected Career Portal</span>
+      </div>
+      <h1 class="hero-title" style="font-size: 2.25rem;">Verified Open Positions</h1>
+      <p class="hero-subtitle" style="margin-bottom: 0; max-width: 600px;">Direct applications to vetted corporate openings across Delhi NCR and remote hiring hubs.</p>
+    </div>
+  </section>
+
+  <!-- Main Catalog Content -->
+  <main class="section container">
+    
+    <!-- Lock State Banner (Visible when user is NOT authenticated via Supabase) -->
+    <div id="authProtectedLockBanner" class="lock-banner" style="display: none;">
+      <div style="width: 56px; height: 56px; background-color: var(--color-brand-light); color: var(--color-brand); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 28px; height: 28px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+      </div>
+      <h2 style="font-size: 1.5rem; margin-bottom: 8px;">Candidate Authentication Required</h2>
+      <p style="color: var(--color-text-muted); max-width: 520px; margin: 0 auto 24px;">To view active job openings, search listings, and submit your CV, please sign in or create a candidate account with Supabase Auth.</p>
+      <div style="display: flex; gap: 12px; justify-content: center;">
+        <button type="button" class="btn btn-primary btn-lg" onclick="openAuthModal('signin')">Candidate Sign In</button>
+        <button type="button" class="btn btn-secondary btn-lg" onclick="openAuthModal('signup')">Create Free Account</button>
+      </div>
+    </div>
+
+    <!-- Authenticated Content Area -->
+    <div id="authenticatedCatalogContent" style="display: none;">
+      <!-- Search & Filter Controls -->
+      <div class="jobs-filter-bar">
+        <div class="search-filter-row">
+          <div class="input-icon-wrapper">
+            <span class="input-icon">
+              <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </span>
+            <input type="text" id="jobSearchInput" class="form-control" placeholder="Search by job title, location, or keywords..." oninput="handleSearch()">
+          </div>
+        </div>
+
+        <!-- Filter Tabs Pills -->
+        <div class="filter-pills" id="filterPillsContainer">
+          <button class="filter-pill active" onclick="setFilter('All', this)">All Opportunities</button>
+          <button class="filter-pill" onclick="setFilter('Internship', this)">Internship Openings</button>
+          <button class="filter-pill" onclick="setFilter('Fresher', this)">Fresher Roles</button>
+          <button class="filter-pill" onclick="setFilter('Work-from-home jobs', this)">Work-From-Home</button>
+          <button class="filter-pill" onclick="setFilter('Part-time opportunities', this)">Part-Time</button>
+        </div>
+      </div>
+
+      <!-- Active Jobs Grid Output -->
+      <div class="jobs-grid" id="jobsGrid">
+        <!-- Dynamic Content or Skeleton -->
+      </div>
+    </div>
+  </main>
+
+  <!-- Supabase Candidate Auth Modal -->
+  <div id="supabaseAuthModal" class="modal-overlay">
+    <div class="modal-card" style="max-width: 440px;">
+      <button type="button" class="modal-close-btn" onclick="closeAuthModal()" aria-label="Close modal">
+        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+
+      <div class="modal-header" style="text-align: center;">
+        <span class="badge badge-brand" style="margin-bottom: 8px;">Supabase Auth</span>
+        <h3 class="modal-title" id="authModalTitle">Candidate Portal Access</h3>
+        <p class="modal-subtitle">Sign in to unlock verified corporate job openings</p>
+      </div>
+
+      <!-- Auth Tabs Toggle -->
+      <div class="auth-tabs" role="tablist">
+        <div class="auth-tab active" id="authTabSignIn" onclick="switchAuthTab('signin')">Sign In</div>
+        <div class="auth-tab" id="authTabSignUp" onclick="switchAuthTab('signup')">Create Account</div>
+      </div>
+
+      <!-- Form 1: Sign In -->
+      <form id="supabaseSignInForm" novalidate>
+        <div class="form-group">
+          <label for="authSignInEmail">Candidate Email Address <span class="required-star">*</span></label>
+          <input type="email" id="authSignInEmail" class="form-control" placeholder="candidate@example.com" required>
+        </div>
+        <div class="form-group" style="margin-bottom: 24px;">
+          <label for="authSignInPassword">Password <span class="required-star">*</span></label>
+          <input type="password" id="authSignInPassword" class="form-control" placeholder="••••••••" required>
+        </div>
+        <button type="submit" id="signInSubmitBtn" class="btn btn-primary btn-full btn-lg">Sign In &amp; Access Jobs</button>
+      </form>
+
+      <!-- Form 2: Sign Up (Create Account) -->
+      <form id="supabaseSignUpForm" style="display: none;" novalidate>
+        <div class="form-group">
+          <label for="authSignUpName">Full Name <span class="required-star">*</span></label>
+          <input type="text" id="authSignUpName" class="form-control" placeholder="e.g. Rahul Sharma" required>
+        </div>
+        <div class="form-group">
+          <label for="authSignUpEmail">Candidate Email Address <span class="required-star">*</span></label>
+          <input type="email" id="authSignUpEmail" class="form-control" placeholder="candidate@example.com" required>
+        </div>
+        <div class="form-group" style="margin-bottom: 24px;">
+          <label for="authSignUpPassword">Set Security Password <span class="required-star">*</span></label>
+          <input type="password" id="authSignUpPassword" class="form-control" placeholder="Minimum 6 characters" required minlength="6">
+        </div>
+        <button type="submit" id="signUpSubmitBtn" class="btn btn-primary btn-full btn-lg">Register Candidate Account</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Job Application Modal -->
+  <div id="applyModal" class="modal-overlay">
+    <div class="modal-card">
+      <button type="button" class="modal-close-btn" onclick="closeModal()" aria-label="Close modal">
+        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+
+      <div class="modal-header">
+        <span class="badge badge-brand" style="margin-bottom: 8px;">Direct Candidate Submission</span>
+        <h3 class="modal-title">Apply for Position</h3>
+        <p id="targetJobTitle" class="modal-subtitle" style="font-weight: 700; color: var(--color-brand);"></p>
+      </div>
+
+      <form id="applicationForm" novalidate>
+        <input type="hidden" id="targetJobId">
+
+        <div class="form-group">
+          <label for="candName">Full Candidate Name <span class="required-star">*</span></label>
+          <input type="text" id="candName" class="form-control" placeholder="e.g. Ananya Roy" required>
+        </div>
+
+        <div class="form-group">
+          <label for="candEmail">Email Address <span class="required-star">*</span></label>
+          <input type="email" id="candEmail" class="form-control" placeholder="e.g. ananya@gmail.com" required readonly style="background-color: var(--color-bg-subtle);">
+        </div>
+
+        <div class="form-group">
+          <label>Upload Curriculum Vitae (CV / Resume) <span class="required-star">*</span></label>
+          <div class="file-dropzone" id="resumeDropZone">
+            <input type="file" id="candResume" accept=".pdf,.doc,.docx" required>
+            <div class="dropzone-icon">
+              <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 16 12 12 8 16"></polyline><line x1="12" y1="12" x2="12" y2="21"></line><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path></svg>
+            </div>
+            <div class="dropzone-title">Drag &amp; drop your resume here, or click to browse</div>
+            <div class="dropzone-hint">Supports PDF, DOC, DOCX up to 5MB maximum file size</div>
+          </div>
+          <div id="filePreviewContainer"></div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 24px;">
+          <label for="candMsg">Cover Letter Notes / Introduction</label>
+          <textarea id="candMsg" class="form-control" rows="3" placeholder="Summarize your professional experience or availability..."></textarea>
+        </div>
+
+        <button type="submit" id="submitAppBtn" class="btn btn-primary btn-full btn-lg">Submit Candidate Application</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          ODD<span>JOBS</span> CONSULTANCY
+        </div>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="index.html#services">Services</a>
+          <a href="jobs.html">Career Board</a>
+          <a href="admin.html">Console Login</a>
+        </div>
+      </div>
+      <p class="footer-copy">Copyright &copy; 2026 ODD JOBS Consultancy. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    let supabaseClient = null;
+    let currentUser = null;
+    let isAdminUser = false;
+
+    let activeCatalog = [];
+    let activeFilter = 'All';
+    let searchQuery = '';
+
+    window.addEventListener('DOMContentLoaded', async () => {
+      // 1. Check if user is logged in as Admin in Console
+      try {
+        const sessionRes = await fetch('/api/admin/check-session');
+        const sessionData = await sessionRes.json();
+        if (sessionData && sessionData.isAdmin) {
+          isAdminUser = true;
+          handleAdminAccess();
+        }
+      } catch (err) {
+        console.error("Admin session check error:", err);
+      }
+
+      // 2. Initialize Supabase Auth Client for Candidates if not Admin
+      if (!isAdminUser) {
+        try {
+          const configRes = await fetch('/api/config');
+          const config = await configRes.json();
+          supabaseClient = window.supabase.createClient(config.supabaseUrl, config.supabaseAnonKey);
+
+          const { data: { session } } = await supabaseClient.auth.getSession();
+          handleAuthStateChange(session);
+
+          supabaseClient.auth.onAuthStateChange((_event, session) => {
+            handleAuthStateChange(session);
+          });
+        } catch (err) {
+          console.error("Supabase init error:", err);
+        }
+      }
+
+      // Bind DropZone for File Upload
+      const dropZone = document.getElementById('resumeDropZone');
+      const fileInput = document.getElementById('candResume');
+      const previewArea = document.getElementById('filePreviewContainer');
+      setupDropZone(dropZone, fileInput, previewArea, 5);
+    });
+
+    // Handle Admin Console Access
+    function handleAdminAccess() {
+      const lockBanner = document.getElementById('authProtectedLockBanner');
+      const catalogContent = document.getElementById('authenticatedCatalogContent');
+      const navAuthContainer = document.getElementById('navAuthContainer');
+
+      lockBanner.style.display = 'none';
+      catalogContent.style.display = 'block';
+
+      navAuthContainer.innerHTML = `
+        <div class="auth-user-badge" style="background-color: var(--color-warning-bg); color: var(--color-warning); border: 1px solid var(--color-warning-border);">
+          <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          <span>Admin Session</span>
+          <a href="admin.html" style="color:var(--color-brand); font-weight:700; text-decoration:none; margin-left:6px;">Go to Console</a>
+        </div>
+      `;
+
+      if (activeCatalog.length === 0) {
+        document.getElementById('jobsGrid').innerHTML = renderSkeletonCards(6);
+        fetchJobs();
+      }
+    }
+
+    // Handle Supabase Candidate Auth Session State
+    function handleAuthStateChange(session) {
+      if (isAdminUser) return;
+
+      const lockBanner = document.getElementById('authProtectedLockBanner');
+      const catalogContent = document.getElementById('authenticatedCatalogContent');
+      const navAuthContainer = document.getElementById('navAuthContainer');
+
+      if (session && session.user) {
+        currentUser = session.user;
+        lockBanner.style.display = 'none';
+        catalogContent.style.display = 'block';
+
+        const userName = currentUser.user_metadata?.full_name || currentUser.email.split('@')[0];
+
+        navAuthContainer.innerHTML = `
+          <div class="auth-user-badge">
+            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <span>${escapeHtml(userName)}</span>
+            <button type="button" onclick="signOutCandidate()" style="background:none; border:none; color:var(--color-error); cursor:pointer; font-size:0.75rem; font-weight:700; margin-left:6px;" title="Sign Out">Sign Out</button>
+          </div>
+        `;
+
+        if (activeCatalog.length === 0) {
+          document.getElementById('jobsGrid').innerHTML = renderSkeletonCards(6);
+          fetchJobs();
+        }
+      } else {
+        currentUser = null;
+        lockBanner.style.display = 'block';
+        catalogContent.style.display = 'none';
+
+        navAuthContainer.innerHTML = `
+          <button type="button" class="btn btn-primary btn-sm" onclick="openAuthModal('signin')">Candidate Sign In</button>
+        `;
+      }
+    }
+
+
+    // --- Supabase Auth Modal & Tab Handlers ---
+    function openAuthModal(defaultTab = 'signin') {
+      switchAuthTab(defaultTab);
+      Modal.open('supabaseAuthModal');
+    }
+
+    function closeAuthModal() {
+      Modal.close('supabaseAuthModal');
+    }
+
+    function switchAuthTab(tab) {
+      const signInTab = document.getElementById('authTabSignIn');
+      const signUpTab = document.getElementById('authTabSignUp');
+      const signInForm = document.getElementById('supabaseSignInForm');
+      const signUpForm = document.getElementById('supabaseSignUpForm');
+      const modalTitle = document.getElementById('authModalTitle');
+
+      if (tab === 'signin') {
+        signInTab.classList.add('active');
+        signUpTab.classList.remove('active');
+        signInForm.style.display = 'block';
+        signUpForm.style.display = 'none';
+        modalTitle.textContent = 'Candidate Portal Access';
+      } else {
+        signUpTab.classList.add('active');
+        signInTab.classList.remove('active');
+        signUpForm.style.display = 'block';
+        signInForm.style.display = 'none';
+        modalTitle.textContent = 'Register Candidate Account';
+      }
+    }
+
+    // Handle Supabase Sign In
+    document.getElementById('supabaseSignInForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const email = document.getElementById('authSignInEmail').value.trim();
+      const password = document.getElementById('authSignInPassword').value.trim();
+
+      if (!email || !password) {
+        Toast.show('Please enter both email and password.', 'error', 'Missing Information');
+        return;
+      }
+
+      const submitBtn = document.getElementById('signInSubmitBtn');
+      ButtonState.setLoading(submitBtn, true, 'Authenticating...');
+
+      const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+
+      ButtonState.setLoading(submitBtn, false);
+
+      if (error) {
+        Toast.show(error.message || 'Failed to sign in. Please verify email and password.', 'error', 'Auth Failed');
+      } else {
+        Toast.show('Signed in successfully! Job openings unlocked.', 'success', 'Welcome Back');
+        closeAuthModal();
+      }
+    });
+
+    // Handle Supabase Sign Up
+    document.getElementById('supabaseSignUpForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const fullName = document.getElementById('authSignUpName').value.trim();
+      const email = document.getElementById('authSignUpEmail').value.trim();
+      const password = document.getElementById('authSignUpPassword').value.trim();
+
+      if (!fullName || !email || !password) {
+        Toast.show('Please fill in all registration fields.', 'error', 'Missing Information');
+        return;
+      }
+
+      if (password.length < 6) {
+        Toast.show('Password must be at least 6 characters.', 'error', 'Weak Password');
+        return;
+      }
+
+      const submitBtn = document.getElementById('signUpSubmitBtn');
+      ButtonState.setLoading(submitBtn, true, 'Creating Account...');
+
+      const { data, error } = await supabaseClient.auth.signUp({
+        email,
+        password,
+        options: {
+          data: { full_name: fullName }
+        }
+      });
+
+      ButtonState.setLoading(submitBtn, false);
+
+      if (error) {
+        Toast.show(error.message || 'Failed to create candidate account.', 'error', 'Registration Error');
+      } else {
+        Toast.show('Candidate account created successfully! You are now logged in.', 'success', 'Account Created');
+        closeAuthModal();
+      }
+    });
+
+    // Handle Supabase Sign Out
+    async function signOutCandidate() {
+      if (supabaseClient) {
+        await supabaseClient.auth.signOut();
+        Toast.show('Signed out successfully.', 'info');
+      }
+    }
+
+    // --- Catalog Fetch & Render Logic ---
+    function fetchJobs() {
+      fetch('/api/jobs')
+        .then(res => res.json())
+        .then(data => {
+          activeCatalog = data;
+          renderCatalog();
+        })
+        .catch(err => {
+          document.getElementById('jobsGrid').innerHTML = renderEmptyState(
+            'Unable to load job catalog',
+            'We encountered a network error while retrieving active job listings. Please refresh the page.',
+            'alertTriangle'
+          );
+        });
+    }
+
+    function renderCatalog() {
+      const grid = document.getElementById('jobsGrid');
+      let filtered = activeCatalog;
+
+      if (activeFilter !== 'All') {
+        filtered = filtered.filter(j => j.category === activeFilter);
+      }
+
+      if (searchQuery) {
+        const q = searchQuery.toLowerCase();
+        filtered = filtered.filter(j => 
+          (j.title && j.title.toLowerCase().includes(q)) ||
+          (j.location && j.location.toLowerCase().includes(q)) ||
+          (j.description && j.description.toLowerCase().includes(q)) ||
+          (j.requirements && j.requirements.toLowerCase().includes(q))
+        );
+      }
+
+      if (filtered.length === 0) {
+        grid.innerHTML = renderEmptyState(
+          'No opportunities found',
+          activeCatalog.length === 0 
+            ? 'There are currently no active openings published. Please check back soon.'
+            : 'No active job listings match your filter or search criteria.',
+          'inbox'
+        );
+        return;
+      }
+
+      grid.innerHTML = filtered.map(job => {
+        const createdDate = job.created_at ? new Date(job.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }) : 'Recently added';
+
+        return `
+          <article class="job-card">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <span class="badge badge-brand">${escapeHtml(job.category)}</span>
+                <span style="font-size: 0.75rem; color: var(--color-text-muted); display: flex; align-items: center; gap: 4px;">
+                  ${Icons.calendar} ${createdDate}
+                </span>
+              </div>
+              
+              <h3 class="job-card-title">${escapeHtml(job.title)}</h3>
+              
+              <div class="job-meta">
+                <span class="job-meta-item">
+                  ${Icons.mapPin} ${escapeHtml(job.location)}
+                </span>
+              </div>
+
+              <p class="job-desc-text">${escapeHtml(job.description)}</p>
+
+              ${job.requirements ? `
+                <div class="job-req-text">
+                  <strong>Requirements:</strong> ${escapeHtml(job.requirements)}
+                </div>
+              ` : ''}
+            </div>
+
+            <button type="button" class="btn btn-primary btn-full" onclick="openModal(${job.id}, '${escapeJs(job.title)}')">
+              Apply Now
+            </button>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function handleSearch() {
+      searchQuery = document.getElementById('jobSearchInput').value.trim();
+      renderCatalog();
+    }
+
+    function setFilter(category, btnEl) {
+      activeFilter = category;
+      document.querySelectorAll('#filterPillsContainer .filter-pill').forEach(pill => pill.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
+      renderCatalog();
+    }
+
+    function openModal(jobId, jobTitle) {
+      if (!currentUser) {
+        openAuthModal('signin');
+        return;
+      }
+
+      document.getElementById('targetJobId').value = jobId;
+      document.getElementById('targetJobTitle').textContent = jobTitle;
+
+      // Auto-fill candidate email & name from Supabase user session!
+      if (currentUser) {
+        document.getElementById('candEmail').value = currentUser.email || '';
+        document.getElementById('candName').value = currentUser.user_metadata?.full_name || currentUser.email.split('@')[0] || '';
+      }
+
+      Modal.open('applyModal');
+    }
+
+    function closeModal() {
+      Modal.close('applyModal');
+      document.getElementById('applicationForm').reset();
+      const previewArea = document.getElementById('filePreviewContainer');
+      if (previewArea) previewArea.innerHTML = '';
+      const dropZone = document.getElementById('resumeDropZone');
+      if (dropZone) dropZone.classList.remove('has-file');
+    }
+
+    document.getElementById('applicationForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const candName = document.getElementById('candName').value.trim();
+      const candEmail = document.getElementById('candEmail').value.trim();
+      const targetJobId = document.getElementById('targetJobId').value;
+      const fileInput = document.getElementById('candResume');
+      const candMsg = document.getElementById('candMsg').value.trim();
+
+      if (!candName || !candEmail || !fileInput.files.length) {
+        Toast.show('Please fill in your name, email, and attach your CV/Resume file.', 'error', 'Missing Information');
+        return;
+      }
+
+      const submitBtn = document.getElementById('submitAppBtn');
+      ButtonState.setLoading(submitBtn, true, 'Submitting Application...');
+
+      const payload = new FormData();
+      payload.append('candidate_name', candName);
+      payload.append('candidate_email', candEmail);
+      payload.append('job_id', targetJobId);
+      payload.append('message', candMsg);
+      payload.append('resume', fileInput.files[0]);
+
+      fetch('/api/apply', {
+        method: 'POST',
+        body: payload
+      })
+      .then(res => res.json())
+      .then(data => {
+        ButtonState.setLoading(submitBtn, false);
+        if (data.success) {
+          Toast.show('Your application and resume have been transmitted successfully.', 'success', 'Application Sent!');
+          closeModal();
+        } else {
+          Toast.show(data.error || 'Submission failure.', 'error', 'Application Error');
+        }
+      })
+      .catch(err => {
+        ButtonState.setLoading(submitBtn, false);
+        Toast.show('Network processing failure. Please check server connectivity.', 'error', 'Network Error');
+      });
+    });
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+    }
+
+    function escapeJs(str) {
+      if (!str) return '';
+      return str.replace(/'/g, "\\'").replace(/"/g, '\\"');
+    }
+  </script>
+</body>
+</html>

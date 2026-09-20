@@ -1,0 +1,12 @@
+{
+  "name": "odd-jobs-portal",
+  "version": "1.0.0",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.116.0",
+    "dotenv": "^17.4.2",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "multer": "^2.2.0",
+    "sqlite3": "^6.0.1"
+  }
+}
