@@ -25,7 +25,7 @@ db.serialize(() => {
   db.run(`CREATE TABLE IF NOT EXISTS jobs (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL,
-    category TEXT NOT NULL, -- Internship, Fresher, WFH, Part-time
+    category TEXT NOT NULL, -- Internship, WFH, On-Site jobs
     description TEXT NOT NULL,
     requirements TEXT,
     location TEXT NOT NULL,
