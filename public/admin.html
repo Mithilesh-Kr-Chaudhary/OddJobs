@@ -133,31 +133,55 @@
     <!-- Admin Tabs Header -->
     <div class="admin-tabs" role="tablist">
       <div class="admin-tab active" id="tab-jobs" onclick="showTab('jobs')" role="tab">Job Postings Management</div>
-      <div class="admin-tab" id="tab-apps" onclick="showTab('apps')" role="tab">Candidate Applications &amp; Resumes
-      </div>
+      <div class="admin-tab" id="tab-templates" onclick="showTab('templates')" role="tab">Recruitment, HR &amp; Compliance Templates</div>
+      <div class="admin-tab" id="tab-apps" onclick="showTab('apps')" role="tab">Candidate Applications &amp; Resumes</div>
     </div>
 
     <!-- Tab 1: Manage Job Postings -->
     <section id="pane-jobs" class="pane">
       <!-- Create Job Card -->
       <div class="card" style="margin-bottom: 32px; border-radius: var(--radius-xl);">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
           <div>
-            <h3 style="font-size: 1.125rem;">Publish New Job Listing</h3>
-            <p class="caption">Create an opportunity entry to publish to the public career board immediately.</p>
+            <h3 style="font-size: 1.125rem;">Publish New Job / Service Listing</h3>
+            <p class="caption">Create an opportunity entry or select a preset HR template to publish immediately.</p>
           </div>
+          <button type="button" class="btn btn-ghost btn-sm" onclick="showTab('templates')" style="color: var(--color-brand); font-weight: 600;">
+            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+            <span>Browse All 18 Templates</span>
+          </button>
         </div>
 
         <form id="newJobForm" novalidate>
+          <!-- Quick Template Auto-Fill Banner -->
+          <div style="background-color: var(--color-brand-light); border: 1px solid #c7d2fe; padding: 16px; border-radius: var(--radius-md); margin-bottom: 20px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="color: var(--color-brand);">${Icons.sparkles}</span>
+                <strong style="font-size: 0.9375rem; color: #1e1b4b;">Auto-Fill from Template:</strong>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px; flex-grow: 1; max-width: 480px;">
+                <select id="adminTemplateSelect" class="form-control" style="background: white; border-color: #a5b4fc;" onchange="handleTemplateDropdownChange(this.value)">
+                  <option value="">-- Choose a Pre-built HR/Recruitment Template --</option>
+                  <!-- Populated via JS -->
+                </select>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="clearJobForm()" title="Clear form">Clear</button>
+              </div>
+            </div>
+          </div>
+
           <div class="form-grid">
             <div class="form-group">
-              <label for="newJobTitle">Position Title <span class="required-star">*</span></label>
+              <label for="newJobTitle">Position / Service Title <span class="required-star">*</span></label>
               <input type="text" id="newJobTitle" class="form-control"
-                placeholder="e.g. Senior HR Operations Specialist" required>
+                placeholder="e.g. Permanent Hiring Specialist or Payroll Manager" required>
             </div>
             <div class="form-group">
               <label for="newJobCategory">Category Domain <span class="required-star">*</span></label>
               <select id="newJobCategory" class="form-control" required>
+                <option value="Recruitment & Hiring">Recruitment &amp; Hiring</option>
+                <option value="HR Services">HR Services</option>
+                <option value="Compliance Services">Compliance Services</option>
                 <option value="Internship">Internship Openings</option>
                 <option value="Work-from-home jobs">Work-From-Home</option>
                 <option value="On-Site jobs">On-Site Jobs</option>
@@ -168,26 +192,25 @@
           <div class="form-grid">
             <div class="form-group">
               <label for="newJobLoc">Location / Remote Status <span class="required-star">*</span></label>
-              <input type="text" id="newJobLoc" class="form-control" placeholder="e.g. Gurgaon / Delhi NCR or Remote"
+              <input type="text" id="newJobLoc" class="form-control" placeholder="e.g. Pan India / Hybrid or Gurgaon"
                 required>
             </div>
             <div class="form-group">
               <label for="newJobReq">Requirements &amp; Prerequisites</label>
               <input type="text" id="newJobReq" class="form-control"
-                placeholder="e.g. 2+ yrs experience, Advanced Excel, Payroll tools">
+                placeholder="e.g. 2+ yrs experience, PF/ESI compliance, Sourcing tools">
             </div>
           </div>
 
           <div class="form-group" style="margin-bottom: 20px;">
-            <label for="newJobDesc">Full Job Description <span class="required-star">*</span></label>
-            <textarea id="newJobDesc" class="form-control" rows="3"
-              placeholder="Provide details regarding role responsibilities, team structure, and qualifications..."
+            <label for="newJobDesc">Full Job / Service Description <span class="required-star">*</span></label>
+            <textarea id="newJobDesc" class="form-control" rows="4"
+              placeholder="Provide details regarding role responsibilities, team structure, and deliverables..."
               required></textarea>
           </div>
 
           <div style="display: flex; justify-content: flex-end;">
-            <button type="submit" id="createJobBtn" class="btn btn-primary" style="min-width: 180px;">Publish Job
-              Listing</button>
+            <button type="submit" id="createJobBtn" class="btn btn-primary" style="min-width: 180px;">Publish Job Listing</button>
           </div>
         </form>
       </div>
@@ -228,7 +251,32 @@
       </div>
     </section>
 
+    <!-- Tab 2: Service & Hiring Templates Catalog -->
+    <section id="pane-templates" class="pane" style="display: none;">
+      <div style="margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+        <div>
+          <h3 style="font-size: 1.25rem;">Enterprise HR &amp; Recruitment Templates Library</h3>
+          <p class="caption">Browse pre-configured job and service templates for instant publishing to the career board.</p>
+        </div>
+        <div class="input-icon-wrapper" style="width: 300px;">
+          <span class="input-icon">${Icons.search}</span>
+          <input type="text" id="templateSearchInput" class="form-control" placeholder="Search templates..." oninput="renderTemplatesGrid()">
+        </div>
+      </div>
 
+      <!-- Template Category Filter Pills -->
+      <div class="filter-pills" style="margin-bottom: 24px;" id="templateCategoryFilters">
+        <button type="button" class="filter-pill active" onclick="filterTemplateCategory('All', this)">All Templates (18)</button>
+        <button type="button" class="filter-pill" onclick="filterTemplateCategory('Recruitment & Hiring', this)">Recruitment &amp; Hiring (5)</button>
+        <button type="button" class="filter-pill" onclick="filterTemplateCategory('HR Services', this)">HR Services (10)</button>
+        <button type="button" class="filter-pill" onclick="filterTemplateCategory('Compliance Services', this)">Compliance Services (3)</button>
+      </div>
+
+      <!-- Templates Grid Container -->
+      <div class="jobs-grid" id="templatesGrid">
+        <!-- Rendered via JS -->
+      </div>
+    </section>
 
     <!-- Tab 3: Candidate Resume Applications -->
     <section id="pane-apps" class="pane" style="display: none;">
@@ -405,11 +453,158 @@
       document.getElementById('logoutBtn').style.display = 'none';
     }
 
+    let selectedTemplateCat = 'All';
+
     function launchConsole() {
       document.getElementById('loginView').style.display = 'none';
       document.getElementById('dashboardView').style.display = 'block';
       document.getElementById('logoutBtn').style.display = 'inline-flex';
+      initTemplatesUI();
       refreshDashboards();
+    }
+
+    function initTemplatesUI() {
+      populateTemplateDropdown();
+      renderTemplatesGrid();
+    }
+
+    function populateTemplateDropdown() {
+      const select = document.getElementById('adminTemplateSelect');
+      if (!select) return;
+
+      let html = '<option value="">-- Choose a Pre-built HR/Recruitment Template --</option>';
+      JOB_SERVICES_TEMPLATES.forEach(group => {
+        html += `<optgroup label="${escapeHtml(group.category)}">`;
+        group.items.forEach(item => {
+          html += `<option value="${item.id}">${escapeHtml(item.title)} (${escapeHtml(item.category)})</option>`;
+        });
+        html += `</optgroup>`;
+      });
+      select.innerHTML = html;
+    }
+
+    function handleTemplateDropdownChange(templateId) {
+      if (!templateId) return;
+      applyTemplateToForm(templateId);
+    }
+
+    function applyTemplateToForm(templateId) {
+      const tmpl = findTemplateById(templateId);
+      if (!tmpl) return;
+
+      document.getElementById('newJobTitle').value = tmpl.title;
+      document.getElementById('newJobCategory').value = tmpl.category;
+      document.getElementById('newJobLoc').value = tmpl.location;
+      document.getElementById('newJobReq').value = tmpl.requirements;
+      document.getElementById('newJobDesc').value = tmpl.description;
+
+      const select = document.getElementById('adminTemplateSelect');
+      if (select) select.value = templateId;
+
+      Toast.show(`Loaded template "${tmpl.title}" into job creation form.`, 'success', 'Template Applied');
+      showTab('jobs');
+      window.scrollTo({ top: document.getElementById('newJobForm').offsetTop - 80, behavior: 'smooth' });
+    }
+
+    function clearJobForm() {
+      document.getElementById('newJobForm').reset();
+      const select = document.getElementById('adminTemplateSelect');
+      if (select) select.value = '';
+    }
+
+    function filterTemplateCategory(catName, btnEl) {
+      selectedTemplateCat = catName;
+      if (btnEl) {
+        document.querySelectorAll('#templateCategoryFilters .filter-pill').forEach(b => b.classList.remove('active'));
+        btnEl.classList.add('active');
+      }
+      renderTemplatesGrid();
+    }
+
+    function renderTemplatesGrid() {
+      const container = document.getElementById('templatesGrid');
+      if (!container) return;
+
+      const searchInput = document.getElementById('templateSearchInput');
+      const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
+
+      let allFlat = getFlatTemplatesList();
+
+      if (selectedTemplateCat !== 'All') {
+        allFlat = allFlat.filter(t => t.category === selectedTemplateCat);
+      }
+
+      if (query) {
+        allFlat = allFlat.filter(t =>
+          t.title.toLowerCase().includes(query) ||
+          t.category.toLowerCase().includes(query) ||
+          t.requirements.toLowerCase().includes(query) ||
+          t.description.toLowerCase().includes(query)
+        );
+      }
+
+      if (allFlat.length === 0) {
+        container.innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding: 40px; color: var(--color-text-muted);">No matching service/job templates found.</div>';
+        return;
+      }
+
+      container.innerHTML = allFlat.map(tmpl => {
+        return `
+          <div class="job-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+                <span class="badge badge-brand">${escapeHtml(tmpl.category)}</span>
+                <span style="font-size: 0.75rem; color: var(--color-text-muted); font-weight: 600;">ID: ${tmpl.id}</span>
+              </div>
+              <h3 style="font-size: 1.125rem; margin-bottom: 8px; color: var(--color-text-main);">${escapeHtml(tmpl.title)}</h3>
+              <p style="font-size: 0.875rem; color: var(--color-text-body); line-height: 1.5; margin-bottom: 12px;">${escapeHtml(tmpl.description)}</p>
+              <div style="font-size: 0.8125rem; color: var(--color-text-muted); background: var(--color-bg-subtle); padding: 8px 12px; border-radius: var(--radius-sm); margin-bottom: 16px;">
+                <strong>Requirements:</strong> ${escapeHtml(tmpl.requirements)}
+              </div>
+            </div>
+            <div style="display: flex; gap: 8px; justify-content: flex-end; pt-2; border-top: 1px solid var(--color-border); padding-top: 12px;">
+              <button type="button" class="btn btn-secondary btn-sm" onclick="applyTemplateToForm('${tmpl.id}')">
+                Load into Form
+              </button>
+              <button type="button" class="btn btn-primary btn-sm" onclick="publishTemplateDirectly('${tmpl.id}')">
+                Publish Now
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function publishTemplateDirectly(templateId) {
+      const tmpl = findTemplateById(templateId);
+      if (!tmpl) return;
+
+      if (!confirm(`Publish listing for "${tmpl.title}" directly to the public Career Board?`)) return;
+
+      const payload = {
+        title: tmpl.title,
+        category: tmpl.category,
+        location: tmpl.location,
+        requirements: tmpl.requirements,
+        description: tmpl.description
+      };
+
+      fetch('/api/jobs', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            Toast.show(`Template listing "${tmpl.title}" published successfully!`, 'success', 'Listing Created');
+            getJobs();
+            showTab('jobs');
+          } else {
+            Toast.show(data.error || 'Failed to publish job.', 'error');
+          }
+        })
+        .catch(() => Toast.show('Network error.', 'error'));
     }
 
     function refreshDashboards() {

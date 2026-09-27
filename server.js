@@ -103,8 +103,46 @@ app.get('/api/config', (req, res) => {
   });
 });
 
-// Fetch active opportunities
+// Fetch preset HR & Recruitment templates
+app.get('/api/templates', (req, res) => {
+  res.json([
+    {
+      category: "Recruitment & Hiring",
+      items: [
+        { id: "rec-permanent", title: "Permanent Hiring", category: "Recruitment & Hiring" },
+        { id: "rec-temp", title: "Temporary Staffing", category: "Recruitment & Hiring" },
+        { id: "rec-bulk", title: "Bulk Hiring", category: "Recruitment & Hiring" },
+        { id: "rec-campus", title: "Campus Recruitment", category: "Recruitment & Hiring" },
+        { id: "rec-executive", title: "Executive Search", category: "Recruitment & Hiring" }
+      ]
+    },
+    {
+      category: "HR Services",
+      items: [
+        { id: "hr-payroll", title: "Payroll Management", category: "HR Services" },
+        { id: "hr-onboarding", title: "Employee Onboarding", category: "HR Services" },
+        { id: "hr-performance", title: "Performance Management", category: "HR Services" },
+        { id: "hr-policy", title: "HR Policy Setup", category: "HR Services" },
+        { id: "hr-attendance", title: "Attendance Management", category: "HR Services" },
+        { id: "hr-training", title: "Training & Development", category: "HR Services" },
+        { id: "hr-softskills", title: "Soft Skills Training", category: "HR Services" },
+        { id: "hr-interview", title: "Interview Training", category: "HR Services" },
+        { id: "hr-workshops", title: "Corporate Workshops", category: "HR Services" },
+        { id: "hr-leadership", title: "Leadership Development", category: "HR Services" }
+      ]
+    },
+    {
+      category: "Compliance Services",
+      items: [
+        { id: "comp-labour", title: "Labour Law Compliance", category: "Compliance Services" },
+        { id: "comp-doc", title: "Documentation", category: "Compliance Services" },
+        { id: "comp-contracts", title: "Employee Contracts", category: "Compliance Services" }
+      ]
+    }
+  ]);
+});
 
+// Fetch active opportunities
 app.get('/api/jobs', (req, res) => {
   db.all('SELECT * FROM jobs ORDER BY created_at DESC', [], (err, rows) => {
     if (err) return res.status(500).json({ error: err.message });

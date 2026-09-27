@@ -24,8 +24,189 @@ const Icons = {
   calendar: `<svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>`,
   building: `<svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="9" y1="6" x2="9" y2="6.01"></line><line x1="15" y1="6" x2="15" y2="6.01"></line><line x1="9" y1="10" x2="9" y2="10.01"></line><line x1="15" y1="10" x2="15" y2="10.01"></line><line x1="9" y1="14" x2="9" y2="14.01"></line><line x1="15" y1="14" x2="15" y2="14.01"></line><line x1="9" y1="18" x2="15" y2="18"></line></svg>`,
   arrowRight: `<svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>`,
-  spinner: `<svg class="svg-icon spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg>`
+  spinner: `<svg class="svg-icon spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg>`,
+  sparkles: `<svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 7.92c0 .13.007.26.007.39 0 .132 0 .263 0 .393a7.5 7.5 0 0 0-7.92 7.92c0 .13-.007.26-.007.39 0-.132 0-.263 0-.393a7.5 7.5 0 0 0-7.92-7.92c0-.13-.007-.26-.007-.39 0-.132 0-.263 0-.393A7.5 7.5 0 0 0 12 3z"></path></svg>`
 };
+
+// --- Job & HR Service Templates Registry ---
+const JOB_SERVICES_TEMPLATES = [
+  {
+    category: "Recruitment & Hiring",
+    icon: "users",
+    items: [
+      {
+        id: "rec-permanent",
+        title: "Permanent Hiring",
+        category: "Recruitment & Hiring",
+        location: "Pan India / Hybrid",
+        requirements: "Full-cycle recruitment, Candidate screening, Skill assessment, Talent mapping",
+        description: "End-to-end permanent recruitment solution for technical, operational, and managerial talent. Sourcing, multi-round screening, background reference checks, and offer negotiation."
+      },
+      {
+        id: "rec-temp",
+        title: "Temporary Staffing",
+        category: "Recruitment & Hiring",
+        location: "On-Site / Flexible",
+        requirements: "Contract staffing management, Payroll alignment, Flexible engagement models",
+        description: "Agile temporary and contract staffing solutions to manage seasonal demand peaks, special projects, and interim workforce needs with quick deployment and compliant onboarding."
+      },
+      {
+        id: "rec-bulk",
+        title: "Bulk Hiring",
+        category: "Recruitment & Hiring",
+        location: "Pan India / Regional Hubs",
+        requirements: "Mass hiring drives, Rapid candidate assessment, Assessment center management",
+        description: "Scalable volume recruitment drives for entry-to-mid level roles, retail, customer support, and operational expansions with rapid turnaround time."
+      },
+      {
+        id: "rec-campus",
+        title: "Campus Recruitment",
+        category: "Recruitment & Hiring",
+        location: "Campus Drives / Virtual",
+        requirements: "University outreach, Aptitude test creation, Graduate talent pool curation",
+        description: "Strategic campus talent acquisition drives connecting enterprises with premier educational institutions including online assessments, hackathons, and on-site interviews."
+      },
+      {
+        id: "rec-executive",
+        title: "Executive Search",
+        category: "Recruitment & Hiring",
+        location: "Pan India / Global",
+        requirements: "C-suite headhunting, Executive evaluation, Confidential candidate engagement",
+        description: "Specialized executive headhunting and leadership placement for Director, VP, and CXO level roles with discrete talent mapping and leadership competency evaluations."
+      }
+    ]
+  },
+  {
+    category: "HR Services",
+    icon: "briefcase",
+    items: [
+      {
+        id: "hr-payroll",
+        title: "Payroll Management",
+        category: "HR Services",
+        location: "Remote / Pan India",
+        requirements: "Payroll processing, Statutory tax compliance (PF, ESI, TDS), Salary slip generation",
+        description: "Turnkey payroll processing management ensuring timely salary disbursement, statutory deductions (PF, ESI, LWF, TDS), automated payslip distribution, and comprehensive financial reports."
+      },
+      {
+        id: "hr-onboarding",
+        title: "Employee Onboarding",
+        category: "HR Services",
+        location: "Hybrid / On-Site",
+        requirements: "Document verification, Orientation workflows, Digital onboarding portal setup",
+        description: "Seamless employee onboarding and orientation programs designed to enhance early employee retention, automate background verification, and streamline document submission."
+      },
+      {
+        id: "hr-performance",
+        title: "Performance Management",
+        category: "HR Services",
+        location: "Pan India",
+        requirements: "KPI & OKR framework design, 360-degree feedback, Appraisal workflow management",
+        description: "Design and implementation of modern Performance Management Frameworks including OKRs, KPIs, mid-year reviews, and 360-degree feedback models tailored for organizational growth."
+      },
+      {
+        id: "hr-policy",
+        title: "HR Policy Setup",
+        category: "HR Services",
+        location: "Corporate Advisory",
+        requirements: "Employee handbook creation, POSH policy compliance, Leave & attendance policies",
+        description: "End-to-end creation and restructuring of company HR policies, employee handbooks, code of conduct, POSH guidelines, and remote-work policy frameworks aligned with industry standards."
+      },
+      {
+        id: "hr-attendance",
+        title: "Attendance Management",
+        category: "HR Services",
+        location: "Pan India",
+        requirements: "Biometric & app tracking integration, Shift roster setup, Leave policy rules",
+        description: "Implementation of automated attendance and leave management systems with real-time biometric integration, geo-fencing, shift roster management, and leave encashment tracking."
+      },
+      {
+        id: "hr-training",
+        title: "Training & Development",
+        category: "HR Services",
+        location: "On-Site / Virtual",
+        requirements: "Skill gap analysis, Curriculum design, Training ROI tracking",
+        description: "Custom corporate training and skill development initiatives tailored to address organizational capability gaps and upskill technical and operational teams."
+      },
+      {
+        id: "hr-softskills",
+        title: "Soft Skills Training",
+        category: "HR Services",
+        location: "Interactive Workshops",
+        requirements: "Business communication, Time management, Client handling, Interpersonal skills",
+        description: "Engaging soft skills training workshops covering workplace communication, emotional intelligence, conflict resolution, active listening, and client relationship management."
+      },
+      {
+        id: "hr-interview",
+        title: "Interview Training",
+        category: "HR Services",
+        location: "Virtual / Classroom",
+        requirements: "Structured interviewing, Competency evaluation, Unconscious bias reduction",
+        description: "Specialized training for hiring managers and interview panels to master competency-based interviewing, eliminate evaluation bias, and make objective hiring decisions."
+      },
+      {
+        id: "hr-workshops",
+        title: "Corporate Workshops",
+        category: "HR Services",
+        location: "On-Site / Offsite",
+        requirements: "Team building, Productivity workshops, Organizational alignment",
+        description: "Custom corporate workshops focusing on team cohesion, strategic goal alignment, stress management, workplace ergonomics, and collaborative problem-solving."
+      },
+      {
+        id: "hr-leadership",
+        title: "Leadership Development",
+        category: "HR Services",
+        location: "Executive Mentorship",
+        requirements: "Managerial coaching, Change management, Strategic decision making",
+        description: "High-impact leadership development programs for emerging leaders and senior executives, focusing on strategic vision, change management, crisis navigation, and team empowerment."
+      }
+    ]
+  },
+  {
+    category: "Compliance Services",
+    icon: "fileText",
+    items: [
+      {
+        id: "comp-labour",
+        title: "Labour Law Compliance",
+        category: "Compliance Services",
+        location: "Pan India / Regional Audit",
+        requirements: "PF, ESI, Factories Act, Minimum Wages Act, Shops & Establishment filings",
+        description: "Comprehensive labour law compliance audit and statutory maintenance covering Factories Act, Shops & Establishments, Minimum Wages, PF/ESI registers, and periodic government filings."
+      },
+      {
+        id: "comp-doc",
+        title: "Documentation",
+        category: "Compliance Services",
+        location: "Digital / Physical",
+        requirements: "Personnel file audits, Statutory registers, Confidential document management",
+        description: "Structured HR documentation service including digital employee file maintenance, NDAs, warning letters, relief letters, exit documentation, and audit-ready statutory register keeping."
+      },
+      {
+        id: "comp-contracts",
+        title: "Employee Contracts",
+        category: "Compliance Services",
+        location: "Legal Advisory",
+        requirements: "Employment contracts, Non-compete clauses, Consultant agreements, NDA drafting",
+        description: "Drafting and vetting of legally compliant employment contracts, offer letters, non-disclosure agreements (NDAs), non-compete clauses, and independent consultant agreements."
+      }
+    ]
+  }
+];
+
+function getFlatTemplatesList() {
+  const flat = [];
+  JOB_SERVICES_TEMPLATES.forEach(group => {
+    group.items.forEach(item => {
+      flat.push(item);
+    });
+  });
+  return flat;
+}
+
+function findTemplateById(id) {
+  return getFlatTemplatesList().find(t => t.id === id);
+}
 
 // --- 2. Toast Notification System ---
 const Toast = {

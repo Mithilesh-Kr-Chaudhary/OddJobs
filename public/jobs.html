@@ -294,6 +294,20 @@
     let searchQuery = '';
 
     window.addEventListener('DOMContentLoaded', async () => {
+      // Check for category filter in URL params
+      const urlParams = new URLSearchParams(window.location.search);
+      const catParam = urlParams.get('category');
+      if (catParam) {
+        activeFilter = catParam;
+        const pills = document.querySelectorAll('#filterPillsContainer .filter-pill');
+        pills.forEach(p => {
+          if (p.textContent.trim().toLowerCase() === catParam.toLowerCase()) {
+            pills.forEach(b => b.classList.remove('active'));
+            p.classList.add('active');
+          }
+        });
+      }
+
       // Fetch active job catalog immediately on page load for all users
       document.getElementById('jobsGrid').innerHTML = renderSkeletonCards(6);
       fetchJobs();

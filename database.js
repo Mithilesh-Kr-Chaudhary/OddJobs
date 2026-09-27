@@ -49,13 +49,53 @@ db.serialize(() => {
   db.run(`ALTER TABLE applications ADD COLUMN resume_url TEXT`, () => {});
 
 
-  // Populate dynamic default job entries
+  // Populate dynamic default job entries from pre-built templates
   db.get("SELECT COUNT(*) as count FROM jobs", (err, row) => {
     if (!err && row.count === 0) {
+      const defaultSeedJobs = [
+        {
+          title: "Permanent Hiring",
+          category: "Recruitment & Hiring",
+          location: "Pan India / Hybrid",
+          requirements: "Full-cycle recruitment, Candidate screening, Skill assessment, Talent mapping",
+          description: "End-to-end permanent recruitment solution for technical, operational, and managerial talent. Sourcing, multi-round screening, background reference checks, and offer negotiation."
+        },
+        {
+          title: "Executive Search",
+          category: "Recruitment & Hiring",
+          location: "Pan India / Global",
+          requirements: "C-suite headhunting, Executive evaluation, Confidential candidate engagement",
+          description: "Specialized executive headhunting and leadership placement for Director, VP, and CXO level roles with discrete talent mapping and leadership competency evaluations."
+        },
+        {
+          title: "Payroll Management",
+          category: "HR Services",
+          location: "Remote / Pan India",
+          requirements: "Payroll processing, Statutory tax compliance (PF, ESI, TDS), Salary slip generation",
+          description: "Turnkey payroll processing management ensuring timely salary disbursement, statutory deductions (PF, ESI, LWF, TDS), automated payslip distribution, and comprehensive financial reports."
+        },
+        {
+          title: "Training & Development",
+          category: "HR Services",
+          location: "On-Site / Virtual",
+          requirements: "Skill gap analysis, Curriculum design, Soft skills, Leadership & interview workshops",
+          description: "Custom corporate training and skill development initiatives including soft skills, interview coaching, corporate workshops, and leadership development."
+        },
+        {
+          title: "Labour Law Compliance",
+          category: "Compliance Services",
+          location: "Pan India / Regional Audit",
+          requirements: "PF, ESI, Factories Act, Minimum Wages Act, Shops & Establishment filings",
+          description: "Comprehensive labour law compliance audit and statutory maintenance covering Factories Act, Shops & Establishments, Minimum Wages, PF/ESI registers, and periodic government filings."
+        }
+      ];
+
       const stmt = db.prepare("INSERT INTO jobs (title, category, description, requirements, location) VALUES (?, ?, ?, ?, ?)");
-     
+      defaultSeedJobs.forEach(job => {
+        stmt.run(job.title, job.category, job.description, job.requirements, job.location);
+      });
       stmt.finalize();
-      console.log("Database initialized with seed data.");
+      console.log("Database initialized with HR & Recruitment seed templates.");
     }
   });
 });
