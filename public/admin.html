@@ -114,18 +114,7 @@
         </div>
       </div>
 
-      <div class="stat-card">
-        <div class="stat-card-icon emerald">
-          <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-            <polyline points="22,6 12,13 2,6"></polyline>
-          </svg>
-        </div>
-        <div>
-          <div class="stat-card-val" id="statInquiries">0</div>
-          <div class="stat-card-lbl">Corporate Inquiries</div>
-        </div>
-      </div>
+
 
       <div class="stat-card">
         <div class="stat-card-icon amber">
@@ -135,7 +124,7 @@
           </svg>
         </div>
         <div>
-          <div class="stat-card-val" id="statCategories">4</div>
+          <div class="stat-card-val" id="statCategories">3</div>
           <div class="stat-card-lbl">Active Hiring Domains</div>
         </div>
       </div>
@@ -144,8 +133,6 @@
     <!-- Admin Tabs Header -->
     <div class="admin-tabs" role="tablist">
       <div class="admin-tab active" id="tab-jobs" onclick="showTab('jobs')" role="tab">Job Postings Management</div>
-      <div class="admin-tab" id="tab-inquiries" onclick="showTab('inquiries')" role="tab">Corporate Client Inquiries
-      </div>
       <div class="admin-tab" id="tab-apps" onclick="showTab('apps')" role="tab">Candidate Applications &amp; Resumes
       </div>
     </div>
@@ -172,9 +159,8 @@
               <label for="newJobCategory">Category Domain <span class="required-star">*</span></label>
               <select id="newJobCategory" class="form-control" required>
                 <option value="Internship">Internship Openings</option>
-                <option value="Fresher">Fresher Jobs</option>
                 <option value="Work-from-home jobs">Work-From-Home</option>
-                <option value="Part-time opportunities">Part-Time Opportunities</option>
+                <option value="On-Site jobs">On-Site Jobs</option>
               </select>
             </div>
           </div>
@@ -242,45 +228,7 @@
       </div>
     </section>
 
-    <!-- Tab 2: Corporate Client Inquiries -->
-    <section id="pane-inquiries" class="pane" style="display: none;">
-      <div class="table-toolbar">
-        <h4 style="font-size: 1rem;">Corporate Consulting Inquiries</h4>
-        <div class="input-icon-wrapper" style="width: 280px;">
-          <span class="input-icon">
-            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-          </span>
-          <input type="text" id="inquiriesTableSearch" class="form-control" placeholder="Search inquiries..."
-            oninput="filterInquiriesTable()">
-        </div>
-      </div>
 
-      <div class="table-wrapper mobile-table-cards">
-        <div class="table-scroll">
-          <table>
-            <thead>
-              <tr>
-                <th>Received Date</th>
-                <th>Contact Person</th>
-                <th>Work Email</th>
-                <th>Contact Number</th>
-                <th>Company</th>
-                <th>Consulting Domain</th>
-                <th>Requirements Message</th>
-                <th style="text-align: right;">Action</th>
-              </tr>
-            </thead>
-
-            <tbody id="inquiriesList">
-              <!-- Rendered via JS -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
 
     <!-- Tab 3: Candidate Resume Applications -->
     <section id="pane-apps" class="pane" style="display: none;">
@@ -322,15 +270,76 @@
   </main>
 
   <!-- Footer -->
-  <footer>
+  <footer class="site-footer">
     <div class="container">
-      <p class="footer-copy">Copyright &copy; 2026 ODD JOBS Management System. All rights reserved.</p>
+      <div class="footer-grid">
+        <div class="footer-col-brand">
+          <div class="footer-brand-title">ODD<span>JOBS</span></div>
+          <p class="footer-brand-desc">Enterprise HR Portal &amp; Management System.</p>
+          <div class="footer-status-pill">
+            <span class="status-dot"></span> Admin Console Active
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <div class="footer-heading">Navigation</div>
+          <ul class="footer-links-list">
+            <li><a href="index.html">Main Website</a></li>
+            <li><a href="jobs.html">Career Board</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <div class="footer-heading">System</div>
+          <ul class="footer-links-list">
+            <li><a href="admin.html">Admin Console</a></li>
+            <li><a href="javascript:void(0)" onclick="logout()">Secure Sign Out</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <div class="footer-heading">Help &amp; Support</div>
+          <div class="footer-contact-list">
+            <a href="tel:+918287209197" class="footer-contact-card">
+              <div class="footer-contact-icon">
+                <svg class="svg-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path
+                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                  </path>
+                </svg>
+              </div>
+              <div class="footer-contact-info">
+                <span class="footer-contact-label">Support Phone</span>
+                <span class="footer-contact-val">+91 82872 09197</span>
+              </div>
+            </a>
+
+            <a href="mailto:connect.oddjobs@gmail.com" class="footer-contact-card">
+              <div class="footer-contact-icon">
+                <svg class="svg-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+              </div>
+              <div class="footer-contact-info">
+                <span class="footer-contact-label">Support Email</span>
+                <span class="footer-contact-val">connect.oddjobs@gmail.com</span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>Copyright &copy; 2026 ODD JOBS Management System. All rights reserved.</p>
+      </div>
     </div>
   </footer>
 
   <script>
     let rawJobs = [];
-    let rawInquiries = [];
     let rawApps = [];
 
     window.addEventListener('DOMContentLoaded', authenticateSession);
@@ -405,13 +414,11 @@
 
     function refreshDashboards() {
       getJobs();
-      getInquiries();
       getApplications();
     }
 
     function updateKpiCounters() {
       document.getElementById('statActiveJobs').textContent = rawJobs.length;
-      document.getElementById('statInquiries').textContent = rawInquiries.length;
       document.getElementById('statApplications').textContent = rawApps.length;
     }
 
@@ -525,72 +532,7 @@
         .catch(() => Toast.show('Network error.', 'error'));
     }
 
-    // --- Pane 2: Corporate Inquiries ---
-    function getInquiries() {
-      fetch('/api/admin/inquiries')
-        .then(res => res.json())
-        .then(data => {
-          rawInquiries = data;
-          updateKpiCounters();
-          renderInquiriesTable(rawInquiries);
-        });
-    }
 
-    function renderInquiriesTable(inquiries) {
-      const body = document.getElementById('inquiriesList');
-      if (inquiries.length === 0) {
-        body.innerHTML = '<tr><td colspan="7" style="text-align:center; color: var(--color-text-muted); padding: 32px;">No client inquiries logged yet.</td></tr>';
-        return;
-      }
-      body.innerHTML = inquiries.map(i => {
-        const dateStr = i.created_at ? new Date(i.created_at).toLocaleDateString() : 'N/A';
-        return `
-          <tr>
-            <td data-label="Received Date" style="font-size:0.8125rem; color:var(--color-text-muted);">${dateStr}</td>
-            <td data-label="Contact Person" style="font-weight:700; color:var(--color-text-main);">${escapeHtml(i.name)}</td>
-            <td data-label="Work Email"><a href="mailto:${escapeHtml(i.email)}" style="color:var(--color-brand); font-weight:600;">${escapeHtml(i.email)}</a></td>
-            <td data-label="Contact Number">${i.phone ? `<a href="tel:${escapeHtml(i.phone)}" style="font-weight:600; color:var(--color-text-main);">${escapeHtml(i.phone)}</a>` : '-'}</td>
-            <td data-label="Company">${escapeHtml(i.company || '-')}</td>
-            <td data-label="Domain"><span class="badge badge-neutral">${escapeHtml(i.service_type)}</span></td>
-            <td data-label="Message" style="max-width:300px; white-space:pre-wrap; font-size:0.8125rem;">${escapeHtml(i.message || '-')}</td>
-            <td data-label="Action" style="text-align:right;">
-              <button class="btn btn-danger btn-sm" onclick="removeInquiry(${i.id})">
-                ${Icons.trash} <span>Delete</span>
-              </button>
-            </td>
-          </tr>
-        `;
-      }).join('');
-    }
-
-    function filterInquiriesTable() {
-      const query = document.getElementById('inquiriesTableSearch').value.toLowerCase().trim();
-      const filtered = rawInquiries.filter(i =>
-        i.name.toLowerCase().includes(query) ||
-        i.email.toLowerCase().includes(query) ||
-        (i.phone && i.phone.toLowerCase().includes(query)) ||
-        (i.company && i.company.toLowerCase().includes(query)) ||
-        i.service_type.toLowerCase().includes(query)
-      );
-      renderInquiriesTable(filtered);
-    }
-
-
-    function removeInquiry(id) {
-      if (!confirm("Permanently delete this corporate inquiry log?")) return;
-
-      fetch('/api/admin/inquiries/' + id, { method: 'DELETE' })
-        .then(res => res.json())
-        .then(data => {
-          if (data.success) {
-            Toast.show('Corporate inquiry record deleted.', 'success');
-            getInquiries();
-          } else {
-            Toast.show(data.error || 'Failed to delete inquiry.', 'error');
-          }
-        })
-        .catch(() => Toast.show('Network error.', 'error'));
-    }
 
     // --- Pane 3: Candidate Applications & Resumes ---
     function getApplications() {

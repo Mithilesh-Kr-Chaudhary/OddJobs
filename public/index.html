@@ -23,7 +23,7 @@
         <a href="#candidates">Candidate Services</a>
         <a href="jobs.html">Career Board</a>
         <a href="admin.html">Console Login</a>
-        <a href="#contact" class="btn btn-primary btn-sm">Hire Talent</a>
+        <a href="jobs.html" class="btn btn-primary btn-sm">Browse Openings</a>
       </nav>
 
       <div class="nav-actions">
@@ -46,8 +46,7 @@
       <p class="hero-subtitle">Specialized regional recruiting, operational compliance, and executive talent sourcing engineered to scale high-growth organizations across Delhi NCR and beyond.</p>
       
       <div class="hero-actions">
-        <a href="#contact" class="btn btn-primary btn-lg">Request HR Solutions</a>
-        <a href="jobs.html" class="btn btn-secondary btn-lg" style="background-color: rgba(255,255,255,0.08); color: #fff; border-color: rgba(255,255,255,0.2);">Explore Openings</a>
+        <a href="jobs.html" class="btn btn-primary btn-lg">Explore Openings</a>
       </div>
 
       <div class="hero-stats">
@@ -177,15 +176,11 @@
               <span class="badge badge-brand">Active</span>
             </li>
             <li>
-              <span>Fresher Entry-Level Roles</span>
-              <span class="badge badge-brand">Active</span>
-            </li>
-            <li>
               <span>Remote / Work-From-Home Jobs</span>
               <span class="badge badge-brand">Active</span>
             </li>
             <li>
-              <span>Part-Time Opportunities</span>
+              <span>On-Site Jobs</span>
               <span class="badge badge-brand">Active</span>
             </li>
           </ul>
@@ -195,123 +190,68 @@
     </div>
   </section>
 
-  <!-- Client/Corporate Request Form Section -->
-  <section id="contact" class="section">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">Consulting Inquiry</span>
-        <h2 class="section-title">Request Enterprise HR Support</h2>
-        <p class="section-subtitle">Submit your organization's talent acquisition or HR operational requirements, and our senior consultants will respond within 24 hours.</p>
-      </div>
-
-      <div class="form-card">
-        <form id="inquiryForm" novalidate>
-          <div class="form-grid">
-            <div class="form-group">
-              <label for="name">Your Full Name <span class="required-star">*</span></label>
-              <input type="text" id="name" class="form-control" placeholder="e.g. Rahul Sharma" required>
-            </div>
-            <div class="form-group">
-              <label for="email">Work Email Address <span class="required-star">*</span></label>
-              <input type="email" id="email" class="form-control" placeholder="e.g. rahul@company.com" required>
-            </div>
-          </div>
-
-          <div class="form-grid">
-            <div class="form-group">
-              <label for="company">Company / Organization Name</label>
-              <input type="text" id="company" class="form-control" placeholder="e.g. Acme Tech Solutions">
-            </div>
-            <div class="form-group">
-              <label for="phone">Contact Number <span class="required-star">*</span></label>
-              <input type="tel" id="phone" class="form-control" placeholder="e.g. +91 98765 43210" required>
-            </div>
-          </div>
-
-          <div class="form-group" style="margin-bottom: 20px;">
-            <label for="service_type">Select Consulting Domain <span class="required-star">*</span></label>
-            <select id="service_type" class="form-control" required>
-              <option value="">-- Choose Category --</option>
-              <option value="Recruitment & Hiring">Recruitment &amp; Staffing</option>
-              <option value="HR Services">HR Services &amp; Payroll</option>
-              <option value="Training & Development">Training &amp; Corporate Development</option>
-              <option value="Compliance Services">Compliance &amp; Legal Audits</option>
-              <option value="For Candidates Services">Candidate Career Advisory (B2C)</option>
-            </select>
-          </div>
-
-          <div class="form-group" style="margin-bottom: 24px;">
-            <label for="message">Detailed Operational Requirements</label>
-            <textarea id="message" class="form-control" rows="4" placeholder="Briefly specify team headcount needs, roles to fill, or operational timelines..."></textarea>
-          </div>
-
-          <button type="submit" id="submitInquiryBtn" class="btn btn-primary btn-full btn-lg">Submit Inquiry Request</button>
-        </form>
-      </div>
-    </div>
-  </section>
-
   <!-- Footer -->
-  <footer>
+  <!-- Footer -->
+  <footer class="site-footer">
     <div class="container">
-      <div class="footer-content">
-        <div class="footer-brand">
-          ODD<span>JOBS</span> CONSULTANCY
+      <div class="footer-grid">
+        <div class="footer-col-brand">
+          <div class="footer-brand-title">ODD<span>JOBS</span></div>
+          <p class="footer-brand-desc">Connecting top talent with leading enterprises. Fast, reliable, and transparent HR &amp; Talent Acquisition solutions.</p>
+          <div class="footer-status-pill">
+            <span class="status-dot"></span> Available for Hiring &amp; Inquiries
+          </div>
         </div>
-        <div class="footer-links">
-          <a href="#services">Services</a>
-          <a href="#candidates">Candidates</a>
-          <a href="jobs.html">Career Board</a>
-          <a href="admin.html">Console Login</a>
+
+        <div class="footer-col">
+          <div class="footer-heading">Navigation</div>
+          <ul class="footer-links-list">
+            <li><a href="index.html#services">Services</a></li>
+            <li><a href="index.html#candidates">Candidates</a></li>
+            <li><a href="jobs.html">Career Board</a></li>
+            <li><a href="admin.html">Console Login</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <div class="footer-heading">Opportunities</div>
+          <ul class="footer-links-list">
+            <li><a href="jobs.html">Internship Jobs</a></li>
+            <li><a href="jobs.html">Remote / WFH</a></li>
+            <li><a href="jobs.html">On-Site Jobs</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <div class="footer-heading">Get In Touch</div>
+          <div class="footer-contact-list">
+            <a href="tel:+918287209197" class="footer-contact-card">
+              <div class="footer-contact-icon">
+                <svg class="svg-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              </div>
+              <div class="footer-contact-info">
+                <span class="footer-contact-label">Call / WhatsApp</span>
+                <span class="footer-contact-val">+91 82872 09197</span>
+              </div>
+            </a>
+
+            <a href="mailto:connect.oddjobs@gmail.com" class="footer-contact-card">
+              <div class="footer-contact-icon">
+                <svg class="svg-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+              </div>
+              <div class="footer-contact-info">
+                <span class="footer-contact-label">Direct Email</span>
+                <span class="footer-contact-val">connect.oddjobs@gmail.com</span>
+              </div>
+            </a>
+          </div>
         </div>
       </div>
-      <p class="footer-copy">Copyright &copy; 2026 ODD JOBS Consultancy. All rights reserved. Professional HR &amp; Talent Acquisition Services.</p>
+
+      <div class="footer-bottom">
+        <p>Copyright &copy; 2026 ODD JOBS. All rights reserved. Professional Talent Acquisition Services.</p>
+      </div>
     </div>
   </footer>
-
-  <script>
-    document.getElementById('inquiryForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-
-      const name = document.getElementById('name').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const phone = document.getElementById('phone').value.trim();
-      const company = document.getElementById('company').value.trim();
-      const service_type = document.getElementById('service_type').value;
-      const message = document.getElementById('message').value.trim();
-
-      if (!name || !email || !phone || !service_type) {
-        Toast.show('Please fill in all required fields (Name, Email, Contact Number, and Consulting Domain).', 'error', 'Validation Error');
-        return;
-      }
-
-
-      const submitBtn = document.getElementById('submitInquiryBtn');
-      ButtonState.setLoading(submitBtn, true, 'Transmitting...');
-
-      const payload = { name, email, phone, company, service_type, message };
-
-
-      fetch('/api/inquiries', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      })
-      .then(res => res.json())
-      .then(data => {
-        ButtonState.setLoading(submitBtn, false);
-        if (data.success) {
-          Toast.show('Corporate inquiry successfully logged. Our senior consultant will reach out shortly.', 'success', 'Inquiry Submitted');
-          document.getElementById('inquiryForm').reset();
-        } else {
-          Toast.show(data.error || 'Failed to submit inquiry. Please try again.', 'error', 'Submission Failed');
-        }
-      })
-      .catch(err => {
-        ButtonState.setLoading(submitBtn, false);
-        Toast.show('Network error encountered. Please check your connectivity and try again.', 'error', 'Network Error');
-      });
-    });
-  </script>
 </body>
 </html>

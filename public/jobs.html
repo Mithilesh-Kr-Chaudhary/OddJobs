@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Explore verified job openings, entry-level fresher roles, internships, part-time, and work-from-home positions across Delhi NCR.">
+  <meta name="description"
+    content="Explore verified job openings, internship roles, work-from-home, and on-site positions across Delhi NCR.">
   <title>Career Openings &amp; Opportunities | ODD JOBS</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="ui-utils.js" defer></script>
 </head>
+
 <body>
 
   <!-- Sticky Navbar -->
@@ -29,31 +32,42 @@
       <div class="nav-actions">
         <!-- Supabase Candidate Auth User Badge Container -->
         <div id="navAuthContainer">
-          <button type="button" class="btn btn-primary btn-sm" onclick="openAuthModal('signin')">Candidate Login</button>
+          <button type="button" class="btn btn-primary btn-sm" onclick="openAuthModal('signin')">Candidate
+            Login</button>
         </div>
 
-        <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation menu" aria-expanded="false">
-          <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation menu"
+          aria-expanded="false">
+          <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
         </button>
       </div>
     </div>
   </header>
 
   <!-- Hero Header -->
-  <section class="hero-section" style="padding: 60px 0 40px; background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);">
+  <section class="hero-section"
+    style="padding: 60px 0 40px; background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);">
     <div class="container hero-content">
       <div class="hero-badge">
-        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+        </svg>
         <span>Public Career Board &amp; Job Directory</span>
       </div>
       <h1 class="hero-title" style="font-size: 2.25rem;">Verified Open Positions</h1>
-      <p class="hero-subtitle" style="margin-bottom: 0; max-width: 600px;">Direct applications to vetted corporate openings across Delhi NCR and remote hiring hubs.</p>
+      <p class="hero-subtitle" style="margin-bottom: 0; max-width: 600px;">Direct applications to vetted corporate
+        openings across Delhi NCR and remote hiring hubs.</p>
     </div>
   </section>
 
   <!-- Main Catalog Content -->
   <main class="section container">
-    
+
     <!-- Catalog Content Area -->
     <div id="authenticatedCatalogContent">
       <!-- Search & Filter Controls -->
@@ -61,9 +75,13 @@
         <div class="search-filter-row">
           <div class="input-icon-wrapper">
             <span class="input-icon">
-              <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
             </span>
-            <input type="text" id="jobSearchInput" class="form-control" placeholder="Search by job title, location, or keywords..." oninput="handleSearch()">
+            <input type="text" id="jobSearchInput" class="form-control"
+              placeholder="Search by job title, location, or keywords..." oninput="handleSearch()">
           </div>
         </div>
 
@@ -71,9 +89,8 @@
         <div class="filter-pills" id="filterPillsContainer">
           <button class="filter-pill active" onclick="setFilter('All', this)">All Opportunities</button>
           <button class="filter-pill" onclick="setFilter('Internship', this)">Internship Openings</button>
-          <button class="filter-pill" onclick="setFilter('Fresher', this)">Fresher Roles</button>
           <button class="filter-pill" onclick="setFilter('Work-from-home jobs', this)">Work-From-Home</button>
-          <button class="filter-pill" onclick="setFilter('Part-time opportunities', this)">Part-Time</button>
+          <button class="filter-pill" onclick="setFilter('On-Site jobs', this)">On-Site Jobs</button>
         </div>
       </div>
 
@@ -88,7 +105,10 @@
   <div id="supabaseAuthModal" class="modal-overlay">
     <div class="modal-card" style="max-width: 440px;">
       <button type="button" class="modal-close-btn" onclick="closeAuthModal()" aria-label="Close modal">
-        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
       </button>
 
       <div class="modal-header" style="text-align: center;">
@@ -113,7 +133,8 @@
           <label for="authSignInPassword">Password <span class="required-star">*</span></label>
           <input type="password" id="authSignInPassword" class="form-control" placeholder="••••••••" required>
         </div>
-        <button type="submit" id="signInSubmitBtn" class="btn btn-primary btn-full btn-lg">Sign In &amp; Access Jobs</button>
+        <button type="submit" id="signInSubmitBtn" class="btn btn-primary btn-full btn-lg">Sign In &amp; Access
+          Jobs</button>
       </form>
 
       <!-- Form 2: Sign Up (Create Account) -->
@@ -128,9 +149,11 @@
         </div>
         <div class="form-group" style="margin-bottom: 24px;">
           <label for="authSignUpPassword">Set Security Password <span class="required-star">*</span></label>
-          <input type="password" id="authSignUpPassword" class="form-control" placeholder="Minimum 6 characters" required minlength="6">
+          <input type="password" id="authSignUpPassword" class="form-control" placeholder="Minimum 6 characters"
+            required minlength="6">
         </div>
-        <button type="submit" id="signUpSubmitBtn" class="btn btn-primary btn-full btn-lg">Register Candidate Account</button>
+        <button type="submit" id="signUpSubmitBtn" class="btn btn-primary btn-full btn-lg">Register Candidate
+          Account</button>
       </form>
     </div>
   </div>
@@ -139,7 +162,10 @@
   <div id="applyModal" class="modal-overlay">
     <div class="modal-card">
       <button type="button" class="modal-close-btn" onclick="closeModal()" aria-label="Close modal">
-        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
       </button>
 
       <div class="modal-header">
@@ -162,11 +188,20 @@
         </div>
 
         <div class="form-group">
+          <label for="candPhone">Contact Number <span class="required-star">*</span></label>
+          <input type="tel" id="candPhone" class="form-control" placeholder="e.g. +91 98765 43210" required>
+        </div>
+
+        <div class="form-group">
           <label>Upload Curriculum Vitae (CV / Resume) <span class="required-star">*</span></label>
           <div class="file-dropzone" id="resumeDropZone">
             <input type="file" id="candResume" accept=".pdf,.doc,.docx" required>
             <div class="dropzone-icon">
-              <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 16 12 12 8 16"></polyline><line x1="12" y1="12" x2="12" y2="21"></line><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path></svg>
+              <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="16 16 12 12 8 16"></polyline>
+                <line x1="12" y1="12" x2="12" y2="21"></line>
+                <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path>
+              </svg>
             </div>
             <div class="dropzone-title">Drag &amp; drop your resume here, or click to browse</div>
             <div class="dropzone-hint">Supports PDF, DOC, DOCX up to 5MB maximum file size</div>
@@ -176,29 +211,76 @@
 
         <div class="form-group" style="margin-bottom: 24px;">
           <label for="candMsg">Cover Letter Notes / Introduction</label>
-          <textarea id="candMsg" class="form-control" rows="3" placeholder="Summarize your professional experience or availability..."></textarea>
+          <textarea id="candMsg" class="form-control" rows="3"
+            placeholder="Summarize your professional experience or availability..."></textarea>
         </div>
 
-        <button type="submit" id="submitAppBtn" class="btn btn-primary btn-full btn-lg">Submit Candidate Application</button>
+        <button type="submit" id="submitAppBtn" class="btn btn-primary btn-full btn-lg">Submit Candidate
+          Application</button>
       </form>
     </div>
   </div>
 
   <!-- Footer -->
-  <footer>
+  <footer class="site-footer">
     <div class="container">
-      <div class="footer-content">
-        <div class="footer-brand">
-          ODD<span>JOBS</span> CONSULTANCY
+      <div class="footer-grid">
+        <div class="footer-col-brand">
+          <div class="footer-brand-title">ODD<span>JOBS</span></div>
+          <p class="footer-brand-desc">Connecting top talent with leading enterprises. Fast, reliable, and transparent HR &amp; Talent Acquisition solutions.</p>
+          <div class="footer-status-pill">
+            <span class="status-dot"></span> Available for Hiring &amp; Inquiries
+          </div>
         </div>
-        <div class="footer-links">
-          <a href="index.html">Home</a>
-          <a href="index.html#services">Services</a>
-          <a href="jobs.html">Career Board</a>
-          <a href="admin.html">Console Login</a>
+
+        <div class="footer-col">
+          <div class="footer-heading">Navigation</div>
+          <ul class="footer-links-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#services">Services</a></li>
+            <li><a href="jobs.html">Career Board</a></li>
+            <li><a href="admin.html">Console Login</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <div class="footer-heading">Opportunities</div>
+          <ul class="footer-links-list">
+            <li><a href="jobs.html">Internship Jobs</a></li>
+            <li><a href="jobs.html">Remote / WFH</a></li>
+            <li><a href="jobs.html">On-Site Jobs</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <div class="footer-heading">Get In Touch</div>
+          <div class="footer-contact-list">
+            <a href="tel:+918287209197" class="footer-contact-card">
+              <div class="footer-contact-icon">
+                <svg class="svg-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              </div>
+              <div class="footer-contact-info">
+                <span class="footer-contact-label">Call / WhatsApp</span>
+                <span class="footer-contact-val">+91 82872 09197</span>
+              </div>
+            </a>
+
+            <a href="mailto:connect.oddjobs@gmail.com" class="footer-contact-card">
+              <div class="footer-contact-icon">
+                <svg class="svg-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+              </div>
+              <div class="footer-contact-info">
+                <span class="footer-contact-label">Direct Email</span>
+                <span class="footer-contact-val">connect.oddjobs@gmail.com</span>
+              </div>
+            </a>
+          </div>
         </div>
       </div>
-      <p class="footer-copy">Copyright &copy; 2026 ODD JOBS Consultancy. All rights reserved.</p>
+
+      <div class="footer-bottom">
+        <p>Copyright &copy; 2026 ODD JOBS. All rights reserved. Professional Talent Acquisition Services.</p>
+      </div>
     </div>
   </footer>
 
@@ -327,7 +409,7 @@
     }
 
     // Handle Supabase Sign In
-    document.getElementById('supabaseSignInForm').addEventListener('submit', async function(e) {
+    document.getElementById('supabaseSignInForm').addEventListener('submit', async function (e) {
       e.preventDefault();
       const email = document.getElementById('authSignInEmail').value.trim();
       const password = document.getElementById('authSignInPassword').value.trim();
@@ -353,7 +435,7 @@
     });
 
     // Handle Supabase Sign Up
-    document.getElementById('supabaseSignUpForm').addEventListener('submit', async function(e) {
+    document.getElementById('supabaseSignUpForm').addEventListener('submit', async function (e) {
       e.preventDefault();
       const fullName = document.getElementById('authSignUpName').value.trim();
       const email = document.getElementById('authSignUpEmail').value.trim();
@@ -425,7 +507,7 @@
 
       if (searchQuery) {
         const q = searchQuery.toLowerCase();
-        filtered = filtered.filter(j => 
+        filtered = filtered.filter(j =>
           (j.title && j.title.toLowerCase().includes(q)) ||
           (j.location && j.location.toLowerCase().includes(q)) ||
           (j.description && j.description.toLowerCase().includes(q)) ||
@@ -436,7 +518,7 @@
       if (filtered.length === 0) {
         grid.innerHTML = renderEmptyState(
           'No opportunities found',
-          activeCatalog.length === 0 
+          activeCatalog.length === 0
             ? 'There are currently no active openings published. Please check back soon.'
             : 'No active job listings match your filter or search criteria.',
           'inbox'
@@ -469,7 +551,12 @@
 
               ${job.requirements ? `
                 <div class="job-req-text">
-                  <strong>Requirements:</strong> ${escapeHtml(job.requirements)}
+                  <button type="button"
+                    style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-brand);font-size:0.8125rem;font-weight:700;display:flex;align-items:center;gap:5px;margin-top:4px;"
+                    onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none';this.querySelector('span.arrow').textContent=this.nextElementSibling.style.display==='none'?'▼ Show Requirements':'▲ Hide Requirements'">
+                    <span class="arrow">▼ Show Requirements</span>
+                  </button>
+                  <div style="display:none;margin-top:8px;padding:12px 14px;background:var(--color-bg-subtle);border-radius:8px;border-left:3px solid var(--color-brand);font-size:0.85rem;line-height:1.7;color:var(--color-text-body);white-space:pre-wrap;">${escapeHtml(job.requirements)}</div>
                 </div>
               ` : ''}
             </div>
@@ -516,17 +603,18 @@
       if (dropZone) dropZone.classList.remove('has-file');
     }
 
-    document.getElementById('applicationForm').addEventListener('submit', function(e) {
+    document.getElementById('applicationForm').addEventListener('submit', function (e) {
       e.preventDefault();
 
       const candName = document.getElementById('candName').value.trim();
       const candEmail = document.getElementById('candEmail').value.trim();
+      const candPhone = document.getElementById('candPhone').value.trim();
       const targetJobId = document.getElementById('targetJobId').value;
       const fileInput = document.getElementById('candResume');
       const candMsg = document.getElementById('candMsg').value.trim();
 
-      if (!candName || !candEmail || !fileInput.files.length) {
-        Toast.show('Please fill in your name, email, and attach your CV/Resume file.', 'error', 'Missing Information');
+      if (!candName || !candEmail || !candPhone || !fileInput.files.length) {
+        Toast.show('Please fill in your name, email, contact number, and attach your CV/Resume file.', 'error', 'Missing Information');
         return;
       }
 
@@ -536,6 +624,7 @@
       const payload = new FormData();
       payload.append('candidate_name', candName);
       payload.append('candidate_email', candEmail);
+      payload.append('candidate_phone', candPhone);
       payload.append('job_id', targetJobId);
       payload.append('message', candMsg);
       payload.append('resume', fileInput.files[0]);
@@ -544,20 +633,20 @@
         method: 'POST',
         body: payload
       })
-      .then(res => res.json())
-      .then(data => {
-        ButtonState.setLoading(submitBtn, false);
-        if (data.success) {
-          Toast.show('Your application and resume have been transmitted successfully.', 'success', 'Application Sent!');
-          closeModal();
-        } else {
-          Toast.show(data.error || 'Submission failure.', 'error', 'Application Error');
-        }
-      })
-      .catch(err => {
-        ButtonState.setLoading(submitBtn, false);
-        Toast.show('Network processing failure. Please check server connectivity.', 'error', 'Network Error');
-      });
+        .then(res => res.json())
+        .then(data => {
+          ButtonState.setLoading(submitBtn, false);
+          if (data.success) {
+            Toast.show('Your application and resume have been transmitted successfully.', 'success', 'Application Sent!');
+            closeModal();
+          } else {
+            Toast.show(data.error || 'Submission failure.', 'error', 'Application Error');
+          }
+        })
+        .catch(err => {
+          ButtonState.setLoading(submitBtn, false);
+          Toast.show('Network processing failure. Please check server connectivity.', 'error', 'Network Error');
+        });
     });
 
     function escapeHtml(str) {
@@ -571,4 +660,5 @@
     }
   </script>
 </body>
+
 </html>
